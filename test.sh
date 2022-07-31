@@ -1,8 +1,0 @@
-printf '\x1b[93mname\x1b[0m'
-echo ''
-printf '{"name":"adam","language":"rust"}'
-echo ''
-printf '{"\x1b[93mname\x1b[0m":"adam","language":"rust"}'
-echo ''
-printf '{\x1b[93m"name":"adam"\x1b[0m,"language":"rust"}'
-echo ''
