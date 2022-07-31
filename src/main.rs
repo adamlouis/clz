@@ -3,13 +3,15 @@ use std::env;
 use std::io::{self, BufRead};
 
 fn main() {
-    let stdin = io::stdin();
-
     let args: Vec<String> = env::args().collect();
-    assert!(args.len() == 2);
+    if args.len() != 2 {
+        println!("usage: clr <regex>");
+        return;
+    };
 
     let re = Regex::new(&args[1]).unwrap();
 
+    let stdin = io::stdin();
     for line in stdin.lock().lines() {
         let line = &line.unwrap();
         let mut replaced = line.clone();
@@ -21,7 +23,6 @@ fn main() {
                 let start = mu.start() + offset;
                 let end = mu.end() + offset;
                 replaced.replace_range(start..end, &colored);
-
                 offset += colored.len() - (mu.end() - mu.start());
             }
         }
