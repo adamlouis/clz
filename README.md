@@ -8,6 +8,6 @@ colorize text that matches a pattern
 
 ## example
 
-`cat README.md | clz usage | clz clz red | clz colorize yellow | clz text magenta | clz regex cyan`
+`cat README.md | clz 'u[a-zA-Z]+e' | clz 'c.?z' red | clz colorize yellow | clz text magenta | clz regex cyan`
 
 ![image of clz output in a terminal](/examples/clz.png?raw=true)
