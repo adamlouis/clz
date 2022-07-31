@@ -5,7 +5,7 @@ use std::io::{self, BufRead};
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 || args.len() > 3 {
-        println!("usage: clr <regex> [black|red|green|yellow|blue|magenta|cyan|white]");
+        println!("usage: clz <regex> [black|red|green|yellow|blue|magenta|cyan|white]");
         return;
     };
 
@@ -20,7 +20,14 @@ fn main() {
         }
     }
 
-    let re = Regex::new(&args[1]).unwrap();
+    let re = match Regex::new(&args[1]) {
+        Ok(r) => r,
+        Err(e) => {
+            println!("invalid regex: {}", e);
+            return;
+        }
+    };
+
     if re.captures_len() > 1 {
         println!("error: regex must not contain capture groups");
         return;

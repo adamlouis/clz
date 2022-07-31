@@ -1,13 +1,13 @@
-# clr
+# clz
 
 colorize text that matches a pattern
 
 ## usage
 
-`clr <regex> [black|red|green|yellow|blue|magenta|cyan|white]`
+`clz <regex> [black|red|green|yellow|blue|magenta|cyan|white]`
 
 ## example
 
-`cat README.md | clr usage | clr clr red | clr colorize yellow | clr text magenta | clr regex cyan`
+`cat README.md | clz usage | clz clz red | clz colorize yellow | clz text magenta | clz regex cyan`
 
-![image of clr output in a terminal](/clr.png?raw=true)
+![image of clz output in a terminal](/examples/clz.png?raw=true)
