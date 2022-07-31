@@ -1,5 +1,5 @@
 [package]
-name = "clr"
+name = "clz"
 version = "0.1.0"
 edition = "2021"
 description = "colorize text that matches a pattern"
