@@ -14,7 +14,7 @@ fn main() {
         match parse_color(args[2].as_str()) {
             Some(c) => color = c,
             None => {
-                println!("invalid color use: black|red|green|yellow|blue|magenta|cyan|white");
+                println!("invalid color - supported options are: black|red|green|yellow|blue|magenta|cyan|white");
                 return;
             }
         }
@@ -71,6 +71,48 @@ fn color_line(line: &mut String, re: &Regex, color: &Color) {
         }
     }
 }
+
+fn color_match(line: &mut String, mat: &Match, offset: usize, color: &Color) {
+    let colored = match color {
+        Color::Black => to_black(mat.as_str()),
+        Color::Red => to_red(mat.as_str()),
+        Color::Green => to_green(mat.as_str()),
+        Color::Yellow => to_yellow(mat.as_str()),
+        Color::Blue => to_blue(mat.as_str()),
+        Color::Magenta => to_magenta(mat.as_str()),
+        Color::Cyan => to_cyan(mat.as_str()),
+        Color::White => to_white(mat.as_str()),
+    };
+    let start = mat.start() + offset;
+    let end = mat.end() + offset;
+    line.replace_range(start..end, &colored);
+}
+
+fn to_black(s: &str) -> String {
+    format!("\x1b[90m{}\x1b[0m", s)
+}
+fn to_red(s: &str) -> String {
+    format!("\x1b[91m{}\x1b[0m", s)
+}
+fn to_green(s: &str) -> String {
+    format!("\x1b[92m{}\x1b[0m", s)
+}
+fn to_yellow(s: &str) -> String {
+    format!("\x1b[93m{}\x1b[0m", s)
+}
+fn to_blue(s: &str) -> String {
+    format!("\x1b[94m{}\x1b[0m", s)
+}
+fn to_magenta(s: &str) -> String {
+    format!("\x1b[95m{}\x1b[0m", s)
+}
+fn to_cyan(s: &str) -> String {
+    format!("\x1b[96m{}\x1b[0m", s)
+}
+fn to_white(s: &str) -> String {
+    format!("\x1b[97m{}\x1b[0m", s)
+}
+
 #[test]
 fn test_color_line() {
     let cases = [
@@ -129,47 +171,4 @@ fn test_color_line() {
         color_line(&mut line, &c.1, &c.2);
         assert_eq!(line, c.3);
     }
-}
-
-fn color_match(line: &mut String, mat: &Match, offset: usize, color: &Color) {
-    let colored = match color {
-        Color::Black => to_black(mat.as_str()),
-        Color::Red => to_red(mat.as_str()),
-        Color::Green => to_green(mat.as_str()),
-        Color::Yellow => to_yellow(mat.as_str()),
-        Color::Blue => to_blue(mat.as_str()),
-        Color::Magenta => to_magenta(mat.as_str()),
-        Color::Cyan => to_cyan(mat.as_str()),
-        Color::White => to_white(mat.as_str()),
-    };
-
-    // format!("\x1b[93m{}\x1b[0m", mat.as_str())
-    let start = mat.start() + offset;
-    let end = mat.end() + offset;
-    line.replace_range(start..end, &colored);
-}
-
-fn to_black(s: &str) -> String {
-    format!("\x1b[90m{}\x1b[0m", s)
-}
-fn to_red(s: &str) -> String {
-    format!("\x1b[91m{}\x1b[0m", s)
-}
-fn to_green(s: &str) -> String {
-    format!("\x1b[92m{}\x1b[0m", s)
-}
-fn to_yellow(s: &str) -> String {
-    format!("\x1b[93m{}\x1b[0m", s)
-}
-fn to_blue(s: &str) -> String {
-    format!("\x1b[94m{}\x1b[0m", s)
-}
-fn to_magenta(s: &str) -> String {
-    format!("\x1b[95m{}\x1b[0m", s)
-}
-fn to_cyan(s: &str) -> String {
-    format!("\x1b[96m{}\x1b[0m", s)
-}
-fn to_white(s: &str) -> String {
-    format!("\x1b[97m{}\x1b[0m", s)
 }
